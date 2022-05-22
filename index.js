@@ -1,6 +1,8 @@
 const express = require('express');
 const res = require('express/lib/response');
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
 const pool = require('./db');
 
 app.use(express.json());
@@ -8,7 +10,7 @@ app.use(express.json());
 app.post('/task/new', async (req, res, next) => {
   try {
     const { description } = req.body;
-    console.log(description);
+
     const newTask = await pool.query(
       'INSERT INTO task(description) VALUES($1) RETURNING *',
       [description]
